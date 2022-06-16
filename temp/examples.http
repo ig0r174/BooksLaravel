@@ -1,0 +1,207 @@
+
+POST http://192.168.0.101:8000/api/v1/user/register
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "User name",
+    "email": "user@mail.ru",
+    "password": "12345"
+}
+
+> {%  client.global.set("API_TOKEN", response.body['data']['token']) %}
+
+###
+
+
+#    Login, if you want.
+#    It's not required, bcz
+#    You've got a token, while registering
+
+POST http://192.168.0.101:8000/api/v1/user/login
+Accept: application/json
+Content-Type: application/json
+
+{
+    "email": "user@mail.ru",
+    "password": "12345"
+}
+> {%  client.global.set("API_TOKEN", response.body['data']['token']) %}
+
+###
+
+#   Info about your user
+
+GET /api/v1/user/info HTTP/1.1
+Host: 192.168.0.101:8000
+Accept: application/json
+Authorization: Bearer {{ API_TOKEN }}
+Content-Type: application/json
+
+###
+
+#   Edit your personal data
+
+PUT /api/v1/user/edit HTTP/1.1
+Host: 192.168.0.101:8000
+Accept: application/json
+Authorization: Bearer {{ API_TOKEN }}
+Content-Type: application/json
+
+{
+    "name": "New user name"
+}
+
+###
+
+PUT /api/v1/user/edit HTTP/1.1
+Host: 192.168.0.101:8000
+Accept: application/json
+Authorization: Bearer {{ API_TOKEN }}
+Content-Type: application/json
+
+{
+    "email": "otherEmail@mail.ru"
+}
+
+###
+
+#   Get known which book statuses exists
+
+GET /api/v1/bookStatuses/
+Accept: application/json
+Host: 192.168.0.101:8000
+Authorization: Bearer {{ API_TOKEN }}
+
+###
+
+#    Create a new book
+
+POST /api/v1/book/
+Accept: application/json
+Host: 192.168.0.101:8000
+Authorization: Bearer {{ API_TOKEN }}
+Content-Type: application/json
+
+{
+    "name": "Adam&Eve",
+    "contents": "Lorem ipsum dolor sit amet"
+}
+
+###
+
+#    Get info about all books in system
+
+GET /api/v1/book/ HTTP/1.1
+Accept: application/json
+Host: 192.168.0.101:8000
+Authorization: Bearer {{ API_TOKEN }}
+
+###
+
+#    Or get about only one book
+
+GET /api/v1/book/1 HTTP/1.1
+Accept: application/json
+Host: 192.168.0.101:8000
+Authorization: Bearer {{ API_TOKEN }}
+
+###
+
+#   Get known which roles exists
+
+GET /api/v1/userRoles/ HTTP/1.1
+Accept: application/json
+Host: 192.168.0.101:8000
+Authorization: Bearer {{ API_TOKEN }}
+
+###
+
+#   Gain to be author
+
+POST /api/v1/cabinet/
+Accept: application/json
+Host: 192.168.0.101:8000
+Authorization: Bearer {{ API_TOKEN }}
+Content-Type: application/json
+
+{
+    "user_id": 1,
+    "book_id": 1,
+    "user_role_id": 1
+}
+
+###
+
+#   Get all books of coworker
+
+GET /api/v1/cabinet/getAllByUser?user_id=1 HTTP/1.1
+Accept: application/json
+Host: 192.168.0.101:8000
+Authorization: Bearer {{ API_TOKEN }}
+
+###
+
+#   Get all books of coworker
+#   Where his role was Author (e.g.)
+
+GET /api/v1/cabinet/getAllByUser?user_id=1&user_role_id=1 HTTP/1.1
+Accept: application/json
+Host: 192.168.0.101:8000
+Authorization: Bearer {{ API_TOKEN }}
+
+###
+
+#   Get all coworkers of the book
+
+GET /api/v1/cabinet/getCoworkersOfBook?book_id=1 HTTP/1.1
+Accept: application/json
+Host: 192.168.0.101:8000
+Authorization: Bearer {{ API_TOKEN }}
+
+###
+
+#   Get all authors of the book (e.g.)
+
+GET /api/v1/cabinet/getCoworkersOfBook?book_id=1&user_role_id=1 HTTP/1.1
+Accept: application/json
+Host: 192.168.0.101:8000
+Authorization: Bearer {{ API_TOKEN }}
+
+###
+
+#    Edit book contents
+
+PUT /api/v1/book/1
+Accept: application/json
+Host: 192.168.0.101:8000
+Authorization: Bearer {{ API_TOKEN }}
+Content-Type: application/json
+
+{
+    "contents": "Lorem ipsum dolor sit amet. Dori me. Ameno."
+}
+
+###
+
+#   Change book status
+
+PUT /api/v1/book/1
+Accept: application/json
+Host: 192.168.0.101:8000
+Authorization: Bearer {{ API_TOKEN }}
+Content-Type: application/json
+
+{
+    "status": 2
+}
+
+###
+
+#   Get book info
+
+GET /api/v1/book/1
+Accept: application/json
+Host: 192.168.0.101:8000
+Authorization: Bearer {{ API_TOKEN }}
+Content-Type: application/json
