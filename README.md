@@ -25,7 +25,7 @@
 
 ### Container
 
-<img alt="" src="https://raw.githubusercontent.com/ig0r174/BooksLaravel/master/public/diagrams/c4/Container.png"/>
+<img alt="" src="https://raw.githubusercontent.com/ig0r174/BooksLaravel/master/public/diagrams/c4/Containers.png"/>
 
 ### Component
 
